@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>index</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
+</head>
+<body>
+<div class="container my-5">
+    <div class="row">
+        <div class="col-md-6">
+                <h2 class="my-5">Users</h2>
+                <table class="table table-striped table-responsive-md">
+                    <thead>
+                    <tr>
+                        <th>Email</th>
+                        <th>Edit</th>
+                        <th>Delete</th>
+                        <th>List Projects</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="user : ${users}">
+                        <td th:text="${user.userName}"></td>
+                        <td><a th:href="@{/edit/{id}(id=${user.userId})}" class="btn btn-primary"><i class="fas fa-user-edit ml-2"></i></a></td>
+                        <td>
+                            <form action="#" th:action="@{/delete/{id}(id=${user.userId})}" th:object="${user}" method="post" >
+                            <input type="hidden" name="_method" value="DELETE" />
+                            <button type="submit" id="submitButton" class="btn btn-primary"> <i class="fas fa-user-times ml-2"></i> </button>
+                            </form>
+                        </td>
+                        <td>
+                        <button type="submit" id="bth-search"
+                                class="btn btn-primary" th:onclick="'projects_ajax_list(\'' + ${user.userId} + '\');'"> <i class="fa fa-list"></i>
+                        </button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            <p class="my-5"><a href="/signUp" class="btn btn-primary"><i class="fas fa-user-plus ml-2"></i></a></p>
+            <div id="projects"></div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" src="webjars/jquery/2.2.4/jquery.min.js"></script>
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
+<script type="text/javascript" src="js/main.js"></script>
+
+</body>
+</html>
